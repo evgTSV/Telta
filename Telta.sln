@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Configuration", "Telt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Configuration.Tests", "Telta.Configuration.Tests\Telta.Configuration.Tests.csproj", "{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Telta.Syntax", "Telta.Syntax\Telta.Syntax.fsproj", "{86A5DCF6-A35A-489F-86FD-B8B7AF0C6FDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86A5DCF6-A35A-489F-86FD-B8B7AF0C6FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A5DCF6-A35A-489F-86FD-B8B7AF0C6FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A5DCF6-A35A-489F-86FD-B8B7AF0C6FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A5DCF6-A35A-489F-86FD-B8B7AF0C6FDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
