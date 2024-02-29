@@ -10,4 +10,4 @@ a |+| b // Value of a is 130
 
 let sum<int>(a + b)
 
-'printf "Sum of {(`a and `b)} = {sum}" // Sum of 130 and 30 = 160
+'printf ("Sum of {`a and `b} = {sum or `(a + b)}") // Sum of 130 and 30 = 160 or 160
