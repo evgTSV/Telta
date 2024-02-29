@@ -3,9 +3,11 @@ use
 	| -> Text
 	| -> Threading.Tasks
 
-let a<int>(10)
+var a<int>(100)
 let b<int>(30)
+
+a |+| b // Value of a is 130
 
 let sum<int>(a + b)
 
-'printf "Sum of {(`a and `b)} = {sum}" // Sum of a and b = 40
+'printf "Sum of {(`a and `b)} = {sum}" // Sum of 130 and 30 = 160
