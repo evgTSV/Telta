@@ -1,7 +1,7 @@
 use
-| -> System
-	| -> Text
-	| -> Threading.Tasks
+|-> System
+	|-> Text
+	|-> Threading.Tasks
 
 var a<int>(100)
 let b<int>(30)
