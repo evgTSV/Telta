@@ -9,6 +9,24 @@ type TokenType =
     /// <summary> Unrecognized </summary>
     | Unknown
     
+    // Brackets
+    /// <summary> '(' </summary>
+    | OpenParen
+    /// <summary> ')' </summary>
+    | CloseParen
+    /// <summary> '[' </summary>
+    | OpenBracket
+    /// <summary> ']' </summary>
+    | CloseBracket
+    /// <summary> '&lt;' </summary>
+    | OpenAngleBracket
+    /// <summary> '&gt;' </summary>
+    | CloseAngleBracket
+    /// <summary> '{' </summary>
+    | OpenBrace
+    /// <summary> '}' </summary>
+    | CloseBrace
+    
     // Logical operators
     /// <summary> '==' </summary>
     | Equal
@@ -23,16 +41,15 @@ type TokenType =
     
     // Increment and Decrement
     /// <summary> '+|' </summary>
-    | IncrementPre
+    | IncrementPrefix
     /// <summary> '|+' </summary>
-    | IncrementPost
+    | IncrementPostfix
     /// <summary> '-|' </summary>
-    | DecrementPre
+    | DecrementPrefix
     /// <summary> '|-' </summary>
-    | DecrementPost
+    | DecrementPostfix
     
     // Standard math operations
-    // Increment and Decrement
     /// <summary> '+' </summary>
     | Add
     /// <summary> '|+|' </summary>
@@ -53,11 +70,15 @@ type TokenType =
     | Module
     /// <summary> '|%|' </summary>
     | ModuleAssign
+    /// <summary> '**' </summary>
+    | Pow
+    /// <summary> '|**|' </summary>
+    | PowAssign
 
     // Bits operations
-    /// <summary> '&' </summary>
+    /// <summary> '&amp;' </summary>
     | BitAnd
-    /// <summary> '|&|' </summary>
+    /// <summary> '|&amp;|' </summary>
     | BitAndAssign
     /// <summary> '|' </summary>
     | BitOr
@@ -69,3 +90,27 @@ type TokenType =
     | BitXorAssign
     /// <summary> '~|' </summary>
     | BitNot
+    /// <summary> '&lt;&lt;' </summary>
+    | ShiftLeft
+    /// <summary> '|&lt;&lt;|' </summary>
+    | ShiftLeftAssign
+    /// <summary> '&gt;&gt;' </summary>
+    | ShiftRight
+    /// <summary> '|&gt;&gt;|' </summary>
+    | ShiftRightAssign
+    
+    // Others operators
+    /// <summary> '-&gt;' </summary>
+    | Array
+    /// <summary> '|-&gt;' </summary>
+    | TreeArray
+    /// <summary> '.' </summary>
+    | Dot
+    /// <summary> ',' </summary>
+    | Comma
+    /// <summary> ':' </summary>
+    | Colon
+    /// <summary> ';' </summary>
+    | Semicolon
+    
+    // Keywords
