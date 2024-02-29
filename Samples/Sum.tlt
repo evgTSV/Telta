@@ -1,0 +1,11 @@
+use
+| -> System
+	| -> Text
+	| -> Threading.Tasks
+
+let a<int>(10)
+let b<int>(30)
+
+let sum<int>(a + b)
+
+'printf "Sum of {(`a and `b)} = {sum}" // Sum of a and b = 40

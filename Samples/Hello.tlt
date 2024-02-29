@@ -1,0 +1,4 @@
+use
+| -> System
+
+'printf ("Hello, World")

@@ -7,6 +7,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Telta.Compiler", "Telta.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Compiler.Tests", "Telta.Compiler.Tests\Telta.Compiler.Tests.csproj", "{84C3137F-98B3-4C2D-A7A3-CA110F4B1F45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Configuration", "Telta.Configuration\Telta.Configuration.csproj", "{2E5ECB85-7FC7-4F03-9246-740191AB34FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Configuration.Tests", "Telta.Configuration.Tests\Telta.Configuration.Tests.csproj", "{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{84C3137F-98B3-4C2D-A7A3-CA110F4B1F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84C3137F-98B3-4C2D-A7A3-CA110F4B1F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84C3137F-98B3-4C2D-A7A3-CA110F4B1F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E5ECB85-7FC7-4F03-9246-740191AB34FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E5ECB85-7FC7-4F03-9246-740191AB34FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E5ECB85-7FC7-4F03-9246-740191AB34FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E5ECB85-7FC7-4F03-9246-740191AB34FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746F709C-8AAF-4961-B41B-A80B8DD5A8D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
