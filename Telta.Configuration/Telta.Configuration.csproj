@@ -10,4 +10,9 @@
       <PackageReference Include="CommandLineParser" Version="2.9.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Telta.Compiler\Telta.Compiler.fsproj" />
+      <ProjectReference Include="..\Telta.Core\Telta.Core.csproj" />
+    </ItemGroup>
+
 </Project>
