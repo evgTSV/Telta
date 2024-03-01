@@ -1,4 +1,3 @@
-use
-| -> System
+use System;
 
-'printf ("Hello, World")
+printf("Hello, World");

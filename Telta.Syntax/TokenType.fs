@@ -2,19 +2,19 @@
 
 type TokenType =
     // Specials
-    /// <summary> Empty or null </summary>
-    | Empty
-    /// <summary> End of source </summary>
+    /// Empty or null
+    | Empty 
+    /// End of source </summary>
     | End
     /// <summary> Unrecognized </summary>
     | Unknown
     
     // Brackets
-    /// <summary> '(' </summary>
+    /// '('
     | OpenParen
-    /// <summary> ')' </summary>
+    /// ')'
     | CloseParen
-    /// <summary> '[' </summary>
+    /// '['
     | OpenBracket
     /// <summary> ']' </summary>
     | CloseBracket
