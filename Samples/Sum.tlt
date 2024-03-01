@@ -1,10 +1,12 @@
 use System;
 
-var a<int>(100);
-var b<int>(30);
+int a = 100;
+int b = 30;
 
-a |+| b; // Value of a is 130
+a += b; // Value of a is 130
 
-var sum<int>(a + b);
+int sum = a + b;
 
-printf ($"Sum of `a and `b = sum or `(a + b)") // Sum of 130 and 30 = 160 or 160
+sum|+;
+
+print($"Sum of `a and `b = `sum or `(a + b)"); // Sum of 130 and 30 = 161 or 160

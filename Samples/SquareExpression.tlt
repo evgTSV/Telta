@@ -1,0 +1,31 @@
+﻿// Square expression is a^2 + b + c = 0
+
+use System;
+use System.Collections.Generic;
+
+// Input coefficients
+
+print("a = ");
+double a = double.Parse(Console.ReadLine());
+print("b = ");
+double b = double.Parse(Console.ReadLine());
+print("c = ");
+double c = double.Parse(Console.ReadLine());
+
+// Evaluate discriminant
+
+double disc = b**2 - 4 * a * c;
+
+if (disc < 0)
+{
+    println("No roots");
+}
+elif (disc == 0)
+{
+    println($"X = `(-1 * b / (a * 2))");
+}
+else
+{
+    println($"X1 = `((-1 * b + Math.Sqrt(disc)) / (a * 2))");
+    println($"X2 = `((-1 * b - Math.Sqrt(disc)) / (a * 2))");
+}
