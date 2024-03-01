@@ -80,11 +80,11 @@ type TokenType =
     | BitAnd
     /// '&='
     | BitAndAssign
-    /// <summary> '|' </summary>
+    /// '|'
     | BitOr
     /// '|='
     | BitOrAssign
-    /// <summary> '^' </summary>
+    /// '^'
     | BitXor
     /// '^='
     | BitXorAssign
