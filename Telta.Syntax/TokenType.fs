@@ -119,4 +119,34 @@ type TokenType =
     /// '"'
     | DoubleQuotationMark
     
+    // Literals
+    /// string literal
+    | StringLiteral
+    /// Char literal
+    | CharLiteral
+    /// Int32 literal
+    | IntLiteral
+    /// float literal
+    | FloatLiteral
+    
     // Keywords
+    /// 'if' keyword
+    | KeywordIf
+    /// 'elif' keyword
+    | KeywordElif
+    /// 'else' keyword
+    | KeywordElse
+    /// 'goto' keyword
+    | KeywordGoto
+    /// 'print' keyword
+    | KeywordPrint
+    /// 'println' keyword
+    | KeywordPrintln
+    /// 'int' keyword
+    | KeywordInt
+    /// 'double' keyword
+    | KeywordDouble
+    /// 'string' keyword
+    | KeywordString
+    /// 'char' keyword
+    | KeywordChar
