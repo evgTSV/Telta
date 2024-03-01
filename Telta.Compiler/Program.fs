@@ -1,2 +1,5 @@
-﻿// For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
+﻿namespace Telta.Compiler
+
+module Program =
+    let main argv =
+       ()
