@@ -20,4 +20,9 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Telta.Compiler\Telta.Compiler.fsproj" />
+      <ProjectReference Include="..\Telta.Configuration\Telta.Configuration.csproj" />
+    </ItemGroup>
+
 </Project>
