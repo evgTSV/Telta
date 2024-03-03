@@ -1,0 +1,37 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Run Build and Unit Tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  main:
+    runs-on: ${{matrix.environment}}
+    strategy:
+      matrix:
+        environment:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+      fail-fast: false      
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 9.0.x
+    - name: 🛠️ Build 🛠️
+      shell: bash
+      run: dotnet build
+    - name: 🧪 Run Unit Tests 🧪
+      shell: bash
+      run: dotnet test
