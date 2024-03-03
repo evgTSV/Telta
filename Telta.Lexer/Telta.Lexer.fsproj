@@ -7,6 +7,15 @@
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
+        <Compile Include="SourceFile.fs" />
+        <Compile Include="Position.fs" />
+        <Compile Include="Range.fs" />
+        <Compile Include="Location.fs" />
+        <Compile Include="IToken.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Telta.Syntax\Telta.Syntax.fsproj" />
     </ItemGroup>
 
 </Project>

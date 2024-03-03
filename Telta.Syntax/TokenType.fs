@@ -2,12 +2,14 @@
 
 type TokenType =
     // Specials
-    /// Empty or null
+    /// Empty or whitespace
     | Empty 
     /// End of source
     | End
     /// Unrecognized
     | Unknown
+    /// Identifier
+    | Identifier
     
     // Brackets
     /// '('
@@ -125,9 +127,9 @@ type TokenType =
     /// Char literal
     | CharLiteral
     /// Int32 literal
-    | IntLiteral
+    | IntegerLiteral
     /// float literal
-    | FloatLiteral
+    | RealNumberLiteral
     
     // Keywords
     /// 'if' keyword
