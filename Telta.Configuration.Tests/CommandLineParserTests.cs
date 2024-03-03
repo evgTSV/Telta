@@ -67,6 +67,26 @@ public class CommandLineParserTests
         Assert.False(isSuccess);
     }
 
+    [Fact]
+    public async Task MultipleInputFiles()
+    {
+        string[] inputFiles = [@"C:\Programs\Calc\calc.tlt", @"C:\Programs\Calc\calcExtensions.tlt"];
+        string[] arguments = [..inputFiles, "-o", @"C:\Programs\Calc\bin\calc.exe"];
+        var reporter = new MockCompilerReporter();
+
+        bool isSuccess = await CommandLineParser.TryParseCommandLineArguments(arguments, reporter, args =>
+        {
+            AssertOptionalArgsHasDefaultValues(args);
+            Assert.True(args.InputFilePaths.Count == 2);
+            Assert.Equivalent(inputFiles, args.InputFilePaths);
+            return Task.FromResult(true);
+        });
+        
+        AssertOnlyInformationalCompilerBanner(reporter);
+        Assert.Empty(reporter.Errors);
+        Assert.True(isSuccess);
+    }
+
     private void AssertOptionalArgsHasDefaultValues(Arguments args)
     {
         Assert.Equal(TargetArchType.Any, args.TargetArch);
