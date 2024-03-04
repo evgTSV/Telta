@@ -65,16 +65,19 @@ type TokenRegexes =
             | "'" -> TokenType.QuotationMark
             | "\"" -> TokenType.DoubleQuotationMark
             
-            | "if" -> TokenType.KeywordIf
-            | "elif" -> TokenType.KeywordElif
-            | "else" -> TokenType.KeywordElse
-            | "goto" -> TokenType.KeywordGoto
-            | "print" -> TokenType.KeywordPrint
-            | "println" -> TokenType.KeywordPrintln
-            | "string" -> TokenType.KeywordString
-            | "char" -> TokenType.KeywordChar
-            | "int32" -> TokenType.KeywordInt
-            | "double" -> TokenType.KeywordDouble
+            | l when this.IsIdentifier l ->
+                match l with
+                    | "if" -> TokenType.KeywordIf
+                    | "elif" -> TokenType.KeywordElif
+                    | "else" -> TokenType.KeywordElse
+                    | "goto" -> TokenType.KeywordGoto
+                    | "print" -> TokenType.KeywordPrint
+                    | "println" -> TokenType.KeywordPrintln
+                    | "string" -> TokenType.KeywordString
+                    | "char" -> TokenType.KeywordChar
+                    | "int32" -> TokenType.KeywordInt
+                    | "double" -> TokenType.KeywordDouble
+                    | _ -> TokenType.Identifier
             
             | l when this.IsStringLiteral l -> TokenType.StringLiteral
             | l when this.IsCharLiteral l -> TokenType.CharLiteral
@@ -82,7 +85,10 @@ type TokenRegexes =
             | l when this.IsRealNumber l -> TokenType.RealNumberLiteral
             
             | _ -> TokenType.Unknown
-    
+            
+    member private this.IsIdentifier(lexeme:string) =
+        lexeme.Length > 0 && not (Char.IsDigit(lexeme.[0])) && lexeme.Length < 100
+        
     member private this.IsStringLiteral(literal:string) =
         literal.StartsWith("\"") && literal.EndsWith("\"")
         
