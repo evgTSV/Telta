@@ -1,15 +1,17 @@
 ﻿namespace Telta.Syntax
 
+open System.Globalization
 open Telta.Lexer
 open System
+open System.Text
 
-type TokenRegexes =
+type TokenRegexes() =
     interface ITokenRegexes<TokenType> with
         member this.FindMatchToken(lexeme:string) =
             match lexeme with
-            | l when String.IsNullOrWhiteSpace l -> TokenType.Empty
             | l when l = Environment.NewLine -> TokenType.NewLine
-            
+            | l when (String.IsNullOrWhiteSpace l) -> TokenType.Empty
+                   
             | "(" -> TokenType.OpenParen
             | ")" -> TokenType.CloseParen
             | "[" -> TokenType.OpenBracket
@@ -86,9 +88,15 @@ type TokenRegexes =
             
             | _ -> TokenType.Unknown
             
+    member public this.FindMatchToken(lexeme:string) = (this :> ITokenRegexes<TokenType>).FindMatchToken(lexeme)
+            
     member private this.IsIdentifier(lexeme:string) =
-        lexeme.Length > 0 && not (Char.IsDigit(lexeme.[0])) && lexeme.Length < 100
+        (Char.IsLetter(lexeme[0]) || lexeme[0] = '_') && lexeme.Length < 100 && this.CheckIdentifier(lexeme)
         
+    member private this.CheckIdentifier(id:string) =
+        id
+        |> Seq.where (fun(ch) -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
+        |> Seq.isEmpty
     member private this.IsStringLiteral(literal:string) =
         literal.StartsWith("\"") && literal.EndsWith("\"")
         
@@ -96,9 +104,9 @@ type TokenRegexes =
         literal.StartsWith("'") && literal.EndsWith("'")
     
     member private this.IsIntNumber(literal:string) =
-        let (isInt, _) = Int32.TryParse(literal)
+        let isInt, _ = Int32.TryParse(literal)
         isInt
         
     member private this.IsRealNumber(literal:string) =
-        let (isReal, _) = Double.TryParse(literal)
+        let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
         isReal
