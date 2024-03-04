@@ -7,7 +7,11 @@
 
     <ItemGroup>
         <Compile Include="TokenType.fs" />
-        <Compile Include="Regexes.fs" />
+        <Compile Include="TokenRegexes.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Telta.Lexer\Telta.Lexer.fsproj" />
     </ItemGroup>
 
 </Project>

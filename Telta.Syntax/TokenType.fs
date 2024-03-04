@@ -3,7 +3,9 @@
 type TokenType =
     // Specials
     /// Empty or whitespace
-    | Empty 
+    | Empty
+    /// New line token ('\r' or '\n' or '\r\n')
+    | NewLine
     /// End of source
     | End
     /// Unrecognized
