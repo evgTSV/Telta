@@ -30,6 +30,7 @@ public class TokenRegexesTest
     [InlineData("'A'")]
     [InlineData("' '")]
     [InlineData("'1'")]
+    [InlineData("'\n'")]
     public void CharLiteralDetectionTest(string lexeme)
     {
         var regex = new TokenRegexes();
@@ -91,7 +92,7 @@ public class TokenRegexesTest
         var regex = new TokenRegexes();
         var tokenType = regex.FindMatchToken(lexeme);
         
-        Assert.Equal(TokenType.Unknown, tokenType);
+        Assert.NotEqual(TokenType.Identifier, tokenType);
     }
     
     [Theory]

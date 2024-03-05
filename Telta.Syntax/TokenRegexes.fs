@@ -3,7 +3,6 @@
 open System.Globalization
 open Telta.Lexer
 open System
-open System.Text
 
 type TokenRegexes() =
     interface ITokenRegexes<TokenType> with
@@ -96,13 +95,13 @@ type TokenRegexes() =
         
     member private this.CheckIdentifier(id:string) =
         id
-        |> Seq.where (fun(ch) -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
+        |> Seq.where (fun ch -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
         |> Seq.isEmpty
     member private this.IsStringLiteral(literal:string) =
         literal.StartsWith("\"") && literal.EndsWith("\"")
         
     member private this.IsCharLiteral(literal:string) =
-        literal.StartsWith("'") && literal.EndsWith("'")
+        literal.StartsWith("'") && literal.EndsWith("'") && literal.Length = 3
     
     member private this.IsIntNumber(literal:string) =
         let isInt, _ = Int32.TryParse(literal)
