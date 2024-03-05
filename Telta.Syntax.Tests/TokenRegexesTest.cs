@@ -1,5 +1,3 @@
-using Telta.Lexer;
-
 namespace Telta.Syntax.Tests;
 
 public class TokenRegexesTest
@@ -84,7 +82,7 @@ public class TokenRegexesTest
     [InlineData("1name")]
     [InlineData("%value")]
     [InlineData("length_over_limit")]
-    [InlineData("int_vari%able3")]
+    [InlineData("int_var%able3")]
     public void InvalidCustomIdentifierTest(string lexeme)
     {
         if (lexeme == "length_over_limit") lexeme = new string('a', 101);

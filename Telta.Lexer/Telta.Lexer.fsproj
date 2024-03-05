@@ -12,6 +12,8 @@
         <Compile Include="Location.fs" />
         <Compile Include="ITokenRegexes.fs" />
         <Compile Include="IToken.fs" />
+        <Compile Include="Lexer.fs" />
+        <Compile Include="TokenStream.fs" />
     </ItemGroup>
 
 </Project>
