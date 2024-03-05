@@ -122,6 +122,8 @@ type TokenType =
     | QuotationMark
     /// '"'
     | DoubleQuotationMark
+    /// '$'
+    | DollarSign
     
     // Literals
     /// string literal
