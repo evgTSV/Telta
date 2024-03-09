@@ -66,6 +66,7 @@ type TokenRegexes() =
             | "'" -> TokenType.QuotationMark
             | "\"" -> TokenType.DoubleQuotationMark
             | "$" -> TokenType.DollarSign
+            | "//" -> TokenType.DoubleSlash
             
             | l when this.IsIdentifier l ->
                 match l with
