@@ -1,5 +1,7 @@
 ﻿namespace Telta.Lexer
 
+open System.Text
+
 type ReadingState =
     | Start
     | Identifier
@@ -8,8 +10,9 @@ type ReadingState =
     | Number
     | Operator
     | Comment
-    | Error
     | End
 
-// type Lexer =
-    
+type Lexer(source:SourceFile) =
+    let currentLexeme = StringBuilder()
+    member val private currentLine = 0
+    member val private currentColumn = 0
