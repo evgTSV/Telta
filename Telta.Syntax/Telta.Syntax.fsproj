@@ -10,8 +10,4 @@
         <Compile Include="TokenRegexes.fs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Telta.Lexer\Telta.Lexer.fsproj" />
-    </ItemGroup>
-
 </Project>

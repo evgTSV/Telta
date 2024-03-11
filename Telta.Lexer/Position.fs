@@ -2,6 +2,9 @@
 
 open System
 
+[<Struct>]
+[<CustomEquality>]
+[<CustomComparison>]
 type public Position(line:int, column:int) =
     interface IComparable<Position> with
         member this.CompareTo(other:Position) =

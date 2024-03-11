@@ -1,14 +1,33 @@
 ﻿namespace Telta.Syntax
 
-open System.Globalization
-open Telta.Lexer
 open System
+open System.Globalization
 
-type TokenRegexes() =
-    interface ITokenRegexes<TokenType> with
-        member this.FindMatchToken(lexeme:string) =
-            match lexeme with
-            | l when l = Environment.NewLine -> TokenType.NewLine
+module TokenRegexes =
+    let private checkIdentifier(id:string) =
+        id
+        |> Seq.where (fun ch -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
+        |> Seq.isEmpty
+    let private isIdentifier (lexeme:string) =
+        (Char.IsLetter(lexeme[0]) || lexeme[0] = '_') && lexeme.Length < 100 && checkIdentifier(lexeme)
+        
+    let private isStringLiteral(literal:string) =
+        literal.StartsWith("\"") && literal.EndsWith("\"")
+        
+    let private isCharLiteral(literal:string) =
+        literal.StartsWith("'") && literal.EndsWith("'") && literal.Length = 3
+    
+    let private isIntNumber(literal:string) =
+        let isInt, _ = Int32.TryParse(literal)
+        isInt
+        
+    let private isRealNumber(literal:string) =
+        let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
+        isReal
+
+    let findMatchToken(lexeme:string) =
+        match lexeme with
+        | l when l = Environment.NewLine -> TokenType.NewLine
             | l when (String.IsNullOrWhiteSpace l) -> TokenType.Empty
                    
             | "(" -> TokenType.OpenParen
@@ -68,7 +87,7 @@ type TokenRegexes() =
             | "$" -> TokenType.DollarSign
             | "//" -> TokenType.DoubleSlash
             
-            | l when this.IsIdentifier l ->
+            | l when isIdentifier l ->
                 match l with
                     | "if" -> TokenType.KeywordIf
                     | "elif" -> TokenType.KeywordElif
@@ -82,32 +101,9 @@ type TokenRegexes() =
                     | "double" -> TokenType.KeywordDouble
                     | _ -> TokenType.Identifier
             
-            | l when this.IsStringLiteral l -> TokenType.StringLiteral
-            | l when this.IsCharLiteral l -> TokenType.CharLiteral
-            | l when this.IsIntNumber l -> TokenType.IntegerLiteral
-            | l when this.IsRealNumber l -> TokenType.RealNumberLiteral
+            | l when isStringLiteral l -> TokenType.StringLiteral
+            | l when isCharLiteral l -> TokenType.CharLiteral
+            | l when isIntNumber l -> TokenType.IntegerLiteral
+            | l when isRealNumber l -> TokenType.RealNumberLiteral
             
             | _ -> TokenType.Unknown
-            
-    member public this.FindMatchToken(lexeme:string) = (this :> ITokenRegexes<TokenType>).FindMatchToken(lexeme)
-            
-    member private this.IsIdentifier(lexeme:string) =
-        (Char.IsLetter(lexeme[0]) || lexeme[0] = '_') && lexeme.Length < 100 && this.CheckIdentifier(lexeme)
-        
-    member private this.CheckIdentifier(id:string) =
-        id
-        |> Seq.where (fun ch -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
-        |> Seq.isEmpty
-    member private this.IsStringLiteral(literal:string) =
-        literal.StartsWith("\"") && literal.EndsWith("\"")
-        
-    member private this.IsCharLiteral(literal:string) =
-        literal.StartsWith("'") && literal.EndsWith("'") && literal.Length = 3
-    
-    member private this.IsIntNumber(literal:string) =
-        let isInt, _ = Int32.TryParse(literal)
-        isInt
-        
-    member private this.IsRealNumber(literal:string) =
-        let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
-        isReal
