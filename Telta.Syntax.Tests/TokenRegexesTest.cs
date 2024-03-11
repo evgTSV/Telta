@@ -6,8 +6,7 @@ public class TokenRegexesTest
     public void NewLineDetectionTest()
     {
         string lexeme = Environment.NewLine;
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.NewLine, tokenType);
     }
@@ -18,8 +17,7 @@ public class TokenRegexesTest
     [InlineData("\"123\"")]
     public void StringLiteralDetectionTest(string lexeme)
     {
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.StringLiteral, tokenType);
     }
@@ -31,8 +29,7 @@ public class TokenRegexesTest
     [InlineData("'\n'")]
     public void CharLiteralDetectionTest(string lexeme)
     {
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.CharLiteral, tokenType);
     }
@@ -43,8 +40,7 @@ public class TokenRegexesTest
     [InlineData("123")]
     public void IntLiteralDetectionTest(string lexeme)
     {
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.IntegerLiteral, tokenType);
     }
@@ -56,8 +52,7 @@ public class TokenRegexesTest
     [InlineData("10.0")]
     public void RealNumLiteralDetectionTest(string lexeme)
     {
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.RealNumberLiteral, tokenType);
     }
@@ -72,8 +67,7 @@ public class TokenRegexesTest
     {
         if (lexeme == "empty") lexeme = String.Empty;
 
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.Empty, tokenType);
     }
@@ -87,8 +81,7 @@ public class TokenRegexesTest
     {
         if (lexeme == "length_over_limit") lexeme = new string('a', 101);
         
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.NotEqual(TokenType.Identifier, tokenType);
     }
@@ -100,8 +93,7 @@ public class TokenRegexesTest
     [InlineData("Vector2")]
     public void ValidCustomIdentifierTest(string lexeme)
     {
-        var regex = new TokenRegexes();
-        var tokenType = regex.FindMatchToken(lexeme);
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
         
         Assert.Equal(TokenType.Identifier, tokenType);
     }
