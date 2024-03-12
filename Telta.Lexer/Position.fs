@@ -7,10 +7,8 @@ open System
 [<CustomComparison>]
 type public Position(line:int, column:int) =
     interface IComparable<Position> with
-        member this.CompareTo(other:Position) =
-            let lineCompare = this.Line - other.Line
-            if lineCompare = 0 then this.Column - other.Column
-            else lineCompare
+        member this.CompareTo(other:Position) = 
+            (this.Line * this.Column) - (other.Line * this.Column)
     interface IComparable with
         member this.CompareTo(other) =
             match other with
