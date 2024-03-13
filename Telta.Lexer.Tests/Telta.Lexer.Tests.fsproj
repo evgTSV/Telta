@@ -4,13 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
-        <GenerateProgramFile>false</GenerateProgramFile>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Tests.fs"/>
-        <Compile Include="Program.fs"/>
+        <Compile Include="FakeSource.fs" />
+        <Compile Include="LexerTests.fs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -18,6 +17,11 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
         <PackageReference Include="xunit" Version="2.5.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Telta.Lexer\Telta.Lexer.fsproj" />
+      <ProjectReference Include="..\Telta.Syntax\Telta.Syntax.fsproj" />
     </ItemGroup>
 
 </Project>
