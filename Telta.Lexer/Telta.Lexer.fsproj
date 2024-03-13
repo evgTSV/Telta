@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="SourceFile.fs" />
         <Compile Include="Position.fs" />
+        <Compile Include="SourceFile.fs" />
         <Compile Include="Range.fs" />
         <Compile Include="Location.fs" />
         <Compile Include="Token.fs" />

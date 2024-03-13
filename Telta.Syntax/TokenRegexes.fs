@@ -27,7 +27,7 @@ module TokenRegexes =
 
     let findMatchToken(lexeme:string) =
         match lexeme with
-        | l when l = Environment.NewLine -> TokenType.NewLine
+            | l when l = Environment.NewLine -> TokenType.NewLine
             | l when (String.IsNullOrWhiteSpace l) -> TokenType.Empty
                    
             | "(" -> TokenType.OpenParen
