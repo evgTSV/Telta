@@ -49,7 +49,7 @@ type Lexer(source:SourceFile) =
                     match value with
                     | v when System.String.IsNullOrWhiteSpace(v.ToString()) ->
                         next ReadingState.Start (source.ReadAndMove())
-                    | v -> next (this.getState(v)) lexeme
+                    | v -> next (this.getState(v)) (source.ReadChar()) 
                 | Identifier(lexemes) ->
                     match value with
                     | v when System.Char.IsLetterOrDigit(v) ->
