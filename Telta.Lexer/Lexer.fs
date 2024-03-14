@@ -14,9 +14,11 @@ type ReadingState =
 
 type Lexer(source:SourceFile) =
     member private this.prepareText (lexemes:List<char>) =
-        let sb = StringBuilder()
-        lexemes |> Seq.iter (fun l -> sb.Append(l) |> ignore)
-        sb.ToString()
+        let rec iterLexemes (list:List<char>) builder =
+            if list.IsEmpty then builder().ToString()
+            else iterLexemes list.Tail (fun() ->
+                StringBuilder(list.Head.ToString()).Append(builder().ToString()))
+        iterLexemes lexemes (fun() -> StringBuilder())
     
     member private this.getLocation (text:string) =
         let range = Range(source.CurrentPosition, text.Length)
@@ -37,7 +39,8 @@ type Lexer(source:SourceFile) =
         | l when l = '/' && (match source.ReadChar() with | Char value -> value = '/' | _ -> false) -> Comment
         | '"' -> StringLiteral(List<char>.Cons(lexeme, List.Empty))
         | ''' -> CharLiteral(List<char>.Cons(lexeme, List.Empty))
-        | _ -> Operator(List<char>.Cons(lexeme, List.Empty))
+        | l when System.Char.IsSymbol(l) || System.Char.IsPunctuation(l) -> Operator(List<char>.Cons(lexeme, List.Empty))
+        | _ -> Start
     
     member this.Tokenization : TokenStream =
         let tokenStream = TokenStream()
@@ -49,7 +52,11 @@ type Lexer(source:SourceFile) =
                     match value with
                     | v when System.String.IsNullOrWhiteSpace(v.ToString()) ->
                         next ReadingState.Start (source.ReadAndMove())
-                    | v -> next (this.getState(v)) (source.ReadChar()) 
+                    | v ->
+                        if source.ReadChar() = Lexeme.End then
+                            tokenStream.AddToken(this.makeToken([v]))
+                            next Start Lexeme.End
+                        else next (this.getState(v)) (source.ReadAndMove()) 
                 | Identifier(lexemes) ->
                     match value with
                     | v when System.Char.IsLetterOrDigit(v) ->
@@ -61,13 +68,13 @@ type Lexer(source:SourceFile) =
                     match value with
                     | '"' ->
                         tokenStream.AddToken(this.makeToken(List<char>.Cons('"', lexemes)))
-                        next Start lexeme
+                        next Start (source.ReadAndMove())
                     | v -> next (StringLiteral(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                 | CharLiteral(lexemes) ->
                     match value with
                     | ''' ->
                         tokenStream.AddToken(this.makeToken(List<char>.Cons(''', lexemes)))
-                        next Start lexeme
+                        next Start (source.ReadAndMove())
                     | v -> next (CharLiteral(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                 | Number(lexemes, isReal) ->
                     match value with
@@ -86,12 +93,15 @@ type Lexer(source:SourceFile) =
                         tokenStream.AddToken(this.makeToken(lexemes))
                         next Start lexeme
                 | Comment ->
-                    while value.ToString() <> System.Environment.NewLine do
-                        next Comment (source.ReadAndMove())
-                    next Start (source.ReadAndMove())
-                    
+                    let rec skip (lexeme:Lexeme) =
+                        match lexeme with
+                        | Char value when value = '\n' -> next Start (source.ReadAndMove())
+                        | Lexeme.End -> ()
+                        | _ -> skip (source.ReadAndMove())
+                    skip lexeme
+                                                     
             | Lexeme.End ->
-                tokenStream.AddToken(this.makeToken(List.Empty, End))
+                tokenStream.AddToken(this.makeToken(List.Empty, TokenType.End))
                 
         next ReadingState.Start (source.ReadAndMove())
         tokenStream
