@@ -42,6 +42,10 @@ type TokenType =
     | LogicalOr
     /// '!'
     | LogicalNot
+    /// '>='
+    | GreaterOrEqual
+    /// '<='
+    | LessOrEqual
     
     // Increment and Decrement
     /// '+|'

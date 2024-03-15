@@ -10,6 +10,7 @@ type ReadingState =
     | CharLiteral of List<char>
     | Number of List<char> * isReal:bool
     | Operator of List<char>
+    | PunctuationOperator of List<char>
     | Comment
 
 type Lexer(source:SourceFile) =
@@ -21,7 +22,10 @@ type Lexer(source:SourceFile) =
         iterLexemes lexemes (fun() -> StringBuilder())
     
     member private this.getLocation (text:string) =
-        let range = Range(source.CurrentPosition, text.Length)
+        let start = Position(
+            source.CurrentPosition.Line,
+            source.CurrentPosition.Column - text.Length - 1)
+        let range = Range(start, source.CurrentPosition)
         Location(source, range)
         
     member private this.makeToken (lexemes:List<char>, ?tokenType:TokenType) =
@@ -34,47 +38,53 @@ type Lexer(source:SourceFile) =
         
     member private this.getState (lexeme:char) : ReadingState =
         match lexeme with
-        | l when System.Char.IsLetter(l) || l = '_' -> Identifier(List<char>.Cons(lexeme, List.Empty))
-        | l when System.Char.IsDigit(l) -> Number(List<char>.Cons(lexeme, List.Empty), false)
+        | l when System.Char.IsLetter(l) || l = '_' -> Identifier(List.Empty)
+        | l when System.Char.IsDigit(l) -> Number(List.Empty, false)
         | l when l = '/' && (match source.ReadChar() with | Char value -> value = '/' | _ -> false) -> Comment
-        | '"' -> StringLiteral(List<char>.Cons(lexeme, List.Empty))
-        | ''' -> CharLiteral(List<char>.Cons(lexeme, List.Empty))
-        | l when System.Char.IsSymbol(l) || System.Char.IsPunctuation(l) -> Operator(List<char>.Cons(lexeme, List.Empty))
+        | '"' -> StringLiteral(List.Empty)
+        | ''' -> CharLiteral(List.Empty)
+        | l when System.Char.IsSymbol(l) -> Operator(List.Empty)
+        | l when System.Char.IsPunctuation(l) -> PunctuationOperator(List.Empty)
         | _ -> Start
     
     member this.Tokenization : TokenStream =
         let tokenStream = TokenStream()
+        
+        let gotoByLexeme stateMachine (lexeme:Lexeme) =
+            match lexeme with
+            | Char(value) -> stateMachine (this.getState(value)) lexeme
+            | Lexeme.End -> stateMachine Start Lexeme.End
+          
         let rec next (state:ReadingState) (lexeme:Lexeme) =
             match lexeme with
             | Char(value) ->
                 match state with
                 | Start ->
-                    match value with
-                    | v when System.String.IsNullOrWhiteSpace(v.ToString()) ->
-                        next ReadingState.Start (source.ReadAndMove())
-                    | v ->
-                        if source.ReadChar() = Lexeme.End then
-                            tokenStream.AddToken(this.makeToken([v]))
+                    if source.ReadChar() = Lexeme.End then
+                            tokenStream.AddToken(this.makeToken([value]))
                             next Start Lexeme.End
-                        else next (this.getState(v)) (source.ReadAndMove()) 
+                    else match value with
+                            | v when System.Char.IsWhiteSpace v || System.Char.IsControl v ->
+                                gotoByLexeme next (source.ReadAndMove())
+                            | _ -> gotoByLexeme next lexeme
                 | Identifier(lexemes) ->
                     match value with
                     | v when System.Char.IsLetterOrDigit(v) ->
                         next (Identifier(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                     | _ ->
                         tokenStream.AddToken(this.makeToken(lexemes))
-                        next Start lexeme
+                        gotoByLexeme next lexeme
                 | StringLiteral(lexemes) ->
                     match value with
-                    | '"' ->
+                    | v when v = '"' && lexemes.Length > 0 ->
                         tokenStream.AddToken(this.makeToken(List<char>.Cons('"', lexemes)))
-                        next Start (source.ReadAndMove())
+                        gotoByLexeme next (source.ReadAndMove())
                     | v -> next (StringLiteral(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                 | CharLiteral(lexemes) ->
                     match value with
-                    | ''' ->
+                    | v when v = ''' && lexemes.Length > 0 ->
                         tokenStream.AddToken(this.makeToken(List<char>.Cons(''', lexemes)))
-                        next Start (source.ReadAndMove())
+                        gotoByLexeme next (source.ReadAndMove())
                     | v -> next (CharLiteral(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                 | Number(lexemes, isReal) ->
                     match value with
@@ -84,19 +94,27 @@ type Lexer(source:SourceFile) =
                         next (Number(List<char>.Cons(v, lexemes), true)) (source.ReadAndMove())
                     | _ ->
                         tokenStream.AddToken(this.makeToken(lexemes))
-                        next Start lexeme
+                        gotoByLexeme next lexeme
                 | Operator(lexemes) ->
                     match value with
                     | v when System.Char.IsSymbol(v) ->
                         next (Operator(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                     | _ ->
                         tokenStream.AddToken(this.makeToken(lexemes))
-                        next Start lexeme
+                        gotoByLexeme next lexeme
+                | PunctuationOperator(lexemes) ->
+                    match value with
+                    | v when System.Char.IsPunctuation v ->
+                        tokenStream.AddToken(this.makeToken(List<char>.Cons(v, List.Empty)))
+                        gotoByLexeme next (source.ReadAndMove())
+                    | _ ->
+                        tokenStream.AddToken(this.makeToken(lexemes))
+                        gotoByLexeme next lexeme
                 | Comment ->
                     let rec skip (lexeme:Lexeme) =
                         match lexeme with
-                        | Char value when value = '\n' -> next Start (source.ReadAndMove())
-                        | Lexeme.End -> ()
+                        | Char value when value = '\n' -> gotoByLexeme next (source.ReadAndMove())
+                        | Lexeme.End -> next Start Lexeme.End
                         | _ -> skip (source.ReadAndMove())
                     skip lexeme
                                                      
