@@ -73,7 +73,7 @@ type Lexer(source:SourceFile) =
                     match value with
                     | v when System.Char.IsDigit(v) ->
                         next (Number(List<char>.Cons(v, lexemes), isReal)) (source.ReadAndMove())
-                    | v when (v = '.' || v = ',') && isReal = false ->
+                    | v when (v = '.' || v = ',') && not isReal ->
                         next (Number(List<char>.Cons(v, lexemes), true)) (source.ReadAndMove())
                     | _ ->
                         tokenStream.AddToken(this.makeToken(lexemes))
