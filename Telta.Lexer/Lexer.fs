@@ -25,7 +25,7 @@ type Lexer(source:SourceFile) =
         let start = Position(
             source.CurrentPosition.Line,
             source.CurrentPosition.Column - text.Length - 1)
-        let range = Range(start, source.CurrentPosition)
+        let range = Range(start, text.Length)
         Location(source, range)
         
     member private this.makeToken (lexemes:List<char>, ?tokenType:TokenType) =
