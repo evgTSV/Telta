@@ -69,7 +69,7 @@ type Lexer(source:SourceFile) =
                             | _ -> gotoByLexeme next lexeme
                 | Identifier(lexemes) ->
                     match value with
-                    | v when System.Char.IsLetterOrDigit(v) ->
+                    | v when System.Char.IsLetterOrDigit(v) || v = '_' ->
                         next (Identifier(List<char>.Cons(v, lexemes))) (source.ReadAndMove())
                     | _ ->
                         tokenStream.AddToken(this.makeToken(lexemes))
