@@ -17,10 +17,10 @@ type public Range =
             if length < 0 then raise (ArgumentException("Length cannot be negative", nameof(length)))
             {
                 _start = start
-                _end = Position(start.Line, start.Column + length)
+                _end = Position(start.Line, start.Column + length - 1)
             }
         
         member this.Start with get() = this._start
         member this.End with get() = this._end
-        member this.Length with get() = (this.End.Line - this.Start.Line + 1) * (this.End.Column - this.Start.Column)
+        member this.Length with get() = (this.End.Line - this.Start.Line + 1) * (this.End.Column - this.Start.Column + 1)
     end

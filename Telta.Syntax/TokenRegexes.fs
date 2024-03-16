@@ -44,6 +44,8 @@ module TokenRegexes =
             | "&&" -> TokenType.LogicalAnd
             | "||" -> TokenType.LogicalOr
             | "!" -> TokenType.LogicalNot
+            | ">=" -> TokenType.GreaterOrEqual
+            | "<=" -> TokenType.LessOrEqual
             
             | "+|" -> TokenType.IncrementPrefix
             | "|+" -> TokenType.IncrementPostfix
