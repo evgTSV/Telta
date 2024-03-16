@@ -1,5 +1,6 @@
 module LexerTests
 
+open System.Collections.Generic
 open System.IO
 open Telta.Lexer
 open Telta.Lexer.Tests
@@ -39,26 +40,26 @@ realNum3 += (decimal)sigma;//"""
     let tokens = lexer.Tokenization
     Assert.True(true)
     
+let AssignNewVariablesTest (tokens:TokenStream) (definedType:TokenType) (value:TokenType) =
+    Assert.Equal(6, tokens.Length)
+    let expectedTokens = [|
+        definedType; TokenType.Identifier; TokenType.Assign; value; TokenType.Semicolon; TokenType.End
+    |]
+    Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.Type))
+    
 [<Theory>]
 [<InlineData("int32 num = 10;")>]
 [<InlineData("int32 NUM= 10 ;")>]
 [<InlineData("int32 NUM_= 10;")>]
 [<InlineData("int32 _num=10;")>]
 [<InlineData("int32 my_num =  10 ; // myNum")>]
-let IntegerAssignNewVariablesTest (source:string) =
+let IntegerLiteralAssignNewVariablesTest (source:string) =
     testTokenization source (fun tokens ->
-        Assert.Equal(6, tokens.Length)
-        Assert.True(tokens.Read.Type = TokenType.KeywordInt)
-        Assert.True(tokens.Read.Type = TokenType.Identifier)
-        Assert.True(tokens.Read.Type = TokenType.Assign)
-        Assert.True(tokens.Read.Type = TokenType.IntegerLiteral)
-        Assert.True(tokens.Read.Type = TokenType.Semicolon)
-        Assert.True(tokens.Read.Type = TokenType.End))
+        AssignNewVariablesTest tokens TokenType.KeywordInt TokenType.IntegerLiteral)
     
 [<Theory>]
 [<InlineData("//ignored")>]
 [<InlineData("// ignored")>]
 [<InlineData("//")>]
 let IgnoreCommentLexemesTest (source:string) =
-    testTokenization source (fun tokens ->
-        Assert.Single(tokens))
+    testTokenization source Assert.Single
