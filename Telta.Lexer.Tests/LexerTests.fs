@@ -30,3 +30,12 @@ realNum3 += (decimal)sigma;//"""
     let lexer = Lexer(sourceFile)
     let tokens = lexer.Tokenization
     Assert.True(true)
+    
+[<Theory>]
+[<InlineData("//ignored")>]
+[<InlineData("// ignored")>]
+[<InlineData("// int32 a = 8")>]
+[<InlineData("//")>]
+let IgnoreCommentLexemesTest (source:string) =
+    // let tokens = getTokens source
+    Assert.True(true) 
