@@ -58,6 +58,46 @@ let IntegerLiteralAssignNewVariablesTest (source:string) =
         AssignNewVariablesTest tokens TokenType.KeywordInt TokenType.IntegerLiteral)
     
 [<Theory>]
+[<InlineData("double num = 10.;")>]
+[<InlineData("double NUM= 10.3 ;")>]
+[<InlineData("double NUM_= 10.0;")>]
+[<InlineData("double _num=1,0;")>]
+[<InlineData("double my_num =  0,10 ; // myNum")>]
+let RealNumberLiteralAssignNewVariablesTest (source:string) =
+    testTokenization source (fun tokens ->
+        AssignNewVariablesTest tokens TokenType.KeywordDouble TokenType.RealNumberLiteral)
+    
+[<Theory>]
+[<InlineData("string text = \"Hello, World!\";")>]
+[<InlineData("string TEXT= \"Hello, World!\" ;")>]
+[<InlineData("string TEXT_= \"Hello, World!\";")>]
+[<InlineData("string _text=\"Hello, World!\";")>]
+[<InlineData("string my_text =  \"Hello, World!\" ; // myText")>]
+let StringLiteralAssignNewVariablesTest (source:string) =
+    testTokenization source (fun tokens ->
+        AssignNewVariablesTest tokens TokenType.KeywordString TokenType.StringLiteral)
+    
+[<Theory>]
+[<InlineData("char symbol = '\n';")>]
+[<InlineData("char SYMBOL= '\n' ;")>]
+[<InlineData("char SYMBOL_= '\n';")>]
+[<InlineData("char _symbol='\n';")>]
+[<InlineData("char my_text =  '\n' ; // myChar")>]
+let CharLiteralAssignNewVariablesTest (source:string) =
+    testTokenization source (fun tokens ->
+        AssignNewVariablesTest tokens TokenType.KeywordChar TokenType.CharLiteral)
+    
+[<Theory>]
+[<InlineData("Point new = old;")>]
+[<InlineData("Point NEW= old ;")>]
+[<InlineData("Point new_= old;")>]
+[<InlineData("Point _new=old;")>]
+[<InlineData("Point my_new =  old ; // myNewPoint")>]
+let CustomTypeAssignVariablesTest (source:string) =
+    testTokenization source (fun tokens ->
+        AssignNewVariablesTest tokens TokenType.Identifier TokenType.Identifier)
+    
+[<Theory>]
 [<InlineData("//ignored")>]
 [<InlineData("// ignored")>]
 [<InlineData("//")>]
