@@ -65,6 +65,7 @@ type Lexer(source:SourceFile) =
                             next Start Lexeme.End
                     else match value with
                             | v when System.Char.IsWhiteSpace v || System.Char.IsControl v ->
+                                if v = '\n' then tokenStream.AddToken(this.makeToken([value], TokenType.NewLine))
                                 gotoByLexeme next (source.ReadAndMove())
                             | _ -> gotoByLexeme next lexeme
                 | Identifier(lexemes) ->
