@@ -103,3 +103,20 @@ let CustomTypeAssignVariablesTest (source:string) =
 [<InlineData("//")>]
 let IgnoreCommentLexemesTest (source:string) =
     testTokenization source Assert.Single
+
+[<Fact>] 
+let MultilineStatementTest() =
+    let source = """if (a == "hello!")
+{
+    a = "Goodbye";
+}"""
+    let expectedTokens = [|
+        KeywordIf; OpenParen; Identifier; Equal; StringLiteral; CloseParen; NewLine
+        OpenBrace; NewLine
+        Identifier; Assign; StringLiteral; Semicolon; NewLine
+        CloseBrace; End;
+    |]
+    testTokenization source (fun tokens ->
+        Assert.Equal(expectedTokens.Length, tokens.Length)
+        Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.Type))
+        )
