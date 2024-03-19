@@ -2,10 +2,4 @@
 
 open Telta.Syntax
 
-type Token(
-    tokenType:TokenType,
-    location:Location,
-    text:string) =
-    member this.Type : TokenType = tokenType
-    member this.Location : Location = location
-    member this.Text : string = text
+type Token = { TokenType:TokenType; Location:Location; Text:string }

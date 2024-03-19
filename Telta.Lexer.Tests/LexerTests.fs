@@ -19,7 +19,7 @@ let EmptySourceTest () =
     let source = ""
     testTokenization source (fun tokens ->
         (tokens :> IEnumerable<Token>) |> Assert.Single |> ignore
-        Assert.Equal(tokens.Read.Type, End)
+        Assert.Equal(tokens.Read.TokenType, End)
         )
     
 let AssignNewVariablesTest (tokens:TokenStream) (definedType:TokenType) (value:TokenType) =
@@ -27,7 +27,7 @@ let AssignNewVariablesTest (tokens:TokenStream) (definedType:TokenType) (value:T
     let expectedTokens = [|
         definedType; TokenType.Identifier; TokenType.Assign; value; TokenType.Semicolon; TokenType.End
     |]
-    Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.Type))
+    Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.TokenType))
     
 [<Theory>]
 [<InlineData("int32 num = 10;")>]
@@ -100,5 +100,5 @@ let MultilineStatementTest() =
     |]
     testTokenization source (fun tokens ->
         Assert.Equal(expectedTokens.Length, tokens.Length)
-        Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.Type))
+        Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.TokenType))
         )

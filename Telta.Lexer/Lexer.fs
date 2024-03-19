@@ -34,7 +34,7 @@ type Lexer(source:SourceFile) =
             if tokenType.IsSome then tokenType.Value
             else TokenRegexes.findMatchToken text
         let location = this.getLocation text
-        Token(``type``, location, text)
+        { TokenType = ``type``; Location = location; Text = text }
         
     member private this.getState (lexeme:char) : ReadingState =
         match lexeme with
