@@ -15,30 +15,12 @@ let private testTokenization (source:string) testFunc =
     testFunc tokens
 
 [<Fact>]
-let PrimaryTest () =
-    let mutable source = """int32 sigma =10 ; // ignored text
-int32 a= 5;
-string greetMessage = "Hello, World!";
-if (sigma>a)
-{
-    print(greetMessage);
-    
-    if (a >=2) {
-            a |+;
-            +| sigma;
-    }
-}
-
-decimal realNum = 4,5;
-decimal realNum2 = 4.5;
-decimal realNum3 = 4.;
-
-realNum3 += (decimal)sigma;//"""
-    use stream = new StringReader(source)
-    let sourceFile = FakeSource(stream)
-    let lexer = Lexer(sourceFile)
-    let tokens = lexer.Tokenization
-    Assert.True(true)
+let EmptySourceTest () =
+    let source = ""
+    testTokenization source (fun tokens ->
+        (tokens :> IEnumerable<Token>) |> Assert.Single |> ignore
+        Assert.Equal(tokens.Read.Type, End)
+        )
     
 let AssignNewVariablesTest (tokens:TokenStream) (definedType:TokenType) (value:TokenType) =
     Assert.Equal(6, tokens.Length)
