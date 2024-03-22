@@ -7,6 +7,8 @@
 
     <ItemGroup>
         <Compile Include="Expressions.fs" />
+        <Compile Include="Statements.fs" />
+        <Compile Include="Declarations.fs" />
     </ItemGroup>
 
     <ItemGroup>
