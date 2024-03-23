@@ -162,3 +162,5 @@ type TokenType =
     | KeywordString
     /// 'char' keyword
     | KeywordChar
+    /// 'return' keyword
+    | ReturnKeyword

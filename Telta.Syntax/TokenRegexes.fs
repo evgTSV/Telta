@@ -101,6 +101,7 @@ module TokenRegexes =
                     | "char" -> TokenType.KeywordChar
                     | "int32" -> TokenType.KeywordInt
                     | "double" -> TokenType.KeywordDouble
+                    | "return" -> TokenType.ReturnKeyword
                     | _ -> TokenType.Identifier
             
             | l when isStringLiteral l -> TokenType.StringLiteral
