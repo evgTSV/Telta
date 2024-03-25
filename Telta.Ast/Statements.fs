@@ -8,4 +8,5 @@ module Statements =
     type Statement =
         | IfElseStatement of ifExpression:Expression * elseExpression:Expression
         | GotoStatement of identifier:Token
-        | ReturnStatement
+        | ReturnStatement of value:Expression
+        | CompoundStatement of statements:Statement
