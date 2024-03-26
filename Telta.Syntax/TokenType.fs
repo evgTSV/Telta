@@ -164,3 +164,7 @@ type TokenType =
     | KeywordChar
     /// 'return' keyword
     | ReturnKeyword
+    /// 'using' keyword
+    | UsingKeyword
+    /// 'namespace' keyword
+    | NamespaceKeyword

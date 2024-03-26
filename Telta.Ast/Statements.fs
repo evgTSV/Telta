@@ -9,4 +9,5 @@ module Statements =
         | IfElseStatement of ifExpression:Expression * elseExpression:Expression
         | GotoStatement of identifier:Token
         | ReturnStatement of value:Expression
+        | UsingStatement of identifier:Token
         | CompoundStatement of statements:Statement

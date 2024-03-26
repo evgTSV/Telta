@@ -27,86 +27,88 @@ module TokenRegexes =
 
     let findMatchToken(lexeme:string) =
         match lexeme with
-            | l when l = Environment.NewLine -> TokenType.NewLine
-            | l when (String.IsNullOrWhiteSpace l) -> TokenType.Empty
+            | l when l = Environment.NewLine -> NewLine
+            | l when (String.IsNullOrWhiteSpace l) -> Empty
                    
-            | "(" -> TokenType.OpenParen
-            | ")" -> TokenType.CloseParen
-            | "[" -> TokenType.OpenBracket
-            | "]" -> TokenType.CloseBracket
-            | "{" -> TokenType.OpenBrace
-            | "}" -> TokenType.CloseBrace
-            | "<" -> TokenType.OpenAngleBracket
-            | ">" -> TokenType.CloseAngleBracket
+            | "(" -> OpenParen
+            | ")" -> CloseParen
+            | "[" -> OpenBracket
+            | "]" -> CloseBracket
+            | "{" -> OpenBrace
+            | "}" -> CloseBrace
+            | "<" -> OpenAngleBracket
+            | ">" -> CloseAngleBracket
             
-            | "==" -> TokenType.Equal
-            | "!=" -> TokenType.NotEqual
-            | "&&" -> TokenType.LogicalAnd
-            | "||" -> TokenType.LogicalOr
-            | "!" -> TokenType.LogicalNot
-            | ">=" -> TokenType.GreaterOrEqual
-            | "<=" -> TokenType.LessOrEqual
+            | "==" -> Equal
+            | "!=" -> NotEqual
+            | "&&" -> LogicalAnd
+            | "||" -> LogicalOr
+            | "!" -> LogicalNot
+            | ">=" -> GreaterOrEqual
+            | "<=" -> LessOrEqual
             
-            | "+|" -> TokenType.IncrementPrefix
-            | "|+" -> TokenType.IncrementPostfix
-            | "-|" -> TokenType.DecrementPrefix
-            | "|-" -> TokenType.DecrementPostfix
+            | "+|" -> IncrementPrefix
+            | "|+" -> IncrementPostfix
+            | "-|" -> DecrementPrefix
+            | "|-" -> DecrementPostfix
             
-            | "+" -> TokenType.Add
-            | "+=" -> TokenType.AddAssign
-            | "-" -> TokenType.Subtract
-            | "-=" -> TokenType.SubtractAssign
-            | "*" -> TokenType.Multiple
-            | "*=" -> TokenType.MultipleAssign
-            | "/" -> TokenType.Divide
-            | "/=" -> TokenType.DivideAssign
-            | "%" -> TokenType.Module
-            | "%=" -> TokenType.ModuleAssign
-            | "**" -> TokenType.Pow
-            | "**=" -> TokenType.PowAssign
+            | "+" -> Add
+            | "+=" -> AddAssign
+            | "-" -> Subtract
+            | "-=" -> SubtractAssign
+            | "*" -> Multiple
+            | "*=" -> MultipleAssign
+            | "/" -> Divide
+            | "/=" -> DivideAssign
+            | "%" -> Module
+            | "%=" -> ModuleAssign
+            | "**" -> Pow
+            | "**=" -> PowAssign
             
-            | "&" -> TokenType.BitAnd
-            | "&=" -> TokenType.BitAndAssign
-            | "|" -> TokenType.BitOr
-            | "|=" -> TokenType.BitOrAssign
-            | "^" -> TokenType.BitXor
-            | "^=" -> TokenType.BitXorAssign
-            | "~" -> TokenType.BitNot
-            | "<<" -> TokenType.ShiftLeft
-            | "<<=" -> TokenType.ShiftLeftAssign
-            | ">>" -> TokenType.ShiftRight
-            | ">>=" -> TokenType.ShiftRightAssign
+            | "&" -> BitAnd
+            | "&=" -> BitAndAssign
+            | "|" -> BitOr
+            | "|=" -> BitOrAssign
+            | "^" -> BitXor
+            | "^=" -> BitXorAssign
+            | "~" -> BitNot
+            | "<<" -> ShiftLeft
+            | "<<=" -> ShiftLeftAssign
+            | ">>" -> ShiftRight
+            | ">>=" -> ShiftRightAssign
             
             | "->" -> TokenType.Array
-            | "." -> TokenType.Dot
-            | "," -> TokenType.Comma
-            | ":" -> TokenType.Colon
-            | ";" -> TokenType.Semicolon
-            | "=" -> TokenType.Assign
-            | "`" -> TokenType.Backquote
-            | "'" -> TokenType.QuotationMark
-            | "\"" -> TokenType.DoubleQuotationMark
-            | "$" -> TokenType.DollarSign
-            | "//" -> TokenType.DoubleSlash
+            | "." -> Dot
+            | "," -> Comma
+            | ":" -> Colon
+            | ";" -> Semicolon
+            | "=" -> Assign
+            | "`" -> Backquote
+            | "'" -> QuotationMark
+            | "\"" -> DoubleQuotationMark
+            | "$" -> DollarSign
+            | "//" -> DoubleSlash
             
             | l when isIdentifier l ->
                 match l with
-                    | "if" -> TokenType.KeywordIf
-                    | "elif" -> TokenType.KeywordElif
-                    | "else" -> TokenType.KeywordElse
-                    | "goto" -> TokenType.KeywordGoto
-                    | "print" -> TokenType.KeywordPrint
-                    | "println" -> TokenType.KeywordPrintln
-                    | "string" -> TokenType.KeywordString
-                    | "char" -> TokenType.KeywordChar
-                    | "int32" -> TokenType.KeywordInt
-                    | "double" -> TokenType.KeywordDouble
-                    | "return" -> TokenType.ReturnKeyword
-                    | _ -> TokenType.Identifier
+                    | "if" -> KeywordIf
+                    | "elif" -> KeywordElif
+                    | "else" -> KeywordElse
+                    | "goto" -> KeywordGoto
+                    | "print" -> KeywordPrint
+                    | "println" -> KeywordPrintln
+                    | "string" -> KeywordString
+                    | "char" -> KeywordChar
+                    | "int32" -> KeywordInt
+                    | "double" -> KeywordDouble
+                    | "return" -> ReturnKeyword
+                    | "use" -> UsingKeyword
+                    | "namespace" -> NamespaceKeyword
+                    | _ -> Identifier
             
-            | l when isStringLiteral l -> TokenType.StringLiteral
-            | l when isCharLiteral l -> TokenType.CharLiteral
-            | l when isIntNumber l -> TokenType.IntegerLiteral
-            | l when isRealNumber l -> TokenType.RealNumberLiteral
+            | l when isStringLiteral l -> StringLiteral
+            | l when isCharLiteral l -> CharLiteral
+            | l when isIntNumber l -> IntegerLiteral
+            | l when isRealNumber l -> RealNumberLiteral
             
-            | _ -> TokenType.Unknown
+            | _ -> Unknown
