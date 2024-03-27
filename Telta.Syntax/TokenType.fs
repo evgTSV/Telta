@@ -168,3 +168,5 @@ type TokenType =
     | UsingKeyword
     /// 'namespace' keyword
     | NamespaceKeyword
+    /// 'class' keyword
+    | ClassKeyword

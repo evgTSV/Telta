@@ -7,5 +7,6 @@ module Declarations =
     
     type Declaration =
         | NamespaceDeclaration of identifier:Token * boundedDeclarations:List<Declaration>
+        | TypeDeclaration of identifier:Token * members:List<Declaration>
         | ParameterDeclaration of identifier:Token * predefinedType:Token
         | MethodDeclaration of identifier:Token * modifiers:List<Token> * parameters:List<Declaration> * predefinedType:Token * block:Statement 
