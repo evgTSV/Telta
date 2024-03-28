@@ -105,6 +105,8 @@ module TokenRegexes =
                     | "use" -> UsingKeyword
                     | "namespace" -> NamespaceKeyword
                     | "class" -> ClassKeyword
+                    | "public" -> PublicKeyword
+                    | "private" -> PrivateKeyword
                     | _ -> Identifier
             
             | l when isStringLiteral l -> StringLiteral

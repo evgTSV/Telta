@@ -170,3 +170,7 @@ type TokenType =
     | NamespaceKeyword
     /// 'class' keyword
     | ClassKeyword
+    /// 'public' keyword
+    | PublicKeyword
+    /// 'private' keyword
+    | PrivateKeyword
