@@ -13,4 +13,5 @@ module Expressions =
         | SimpleAssignExpression of ``member``:Expression * value:Expression
         | StringLiteralExpression of value:Token
         | NumericLiteralExpression of value:Token
+        | BinaryExpression of operator:Token * left:Expression * right:Expression
         | Empty
