@@ -136,10 +136,12 @@ type TokenType =
     | StringLiteral
     /// Char literal
     | CharLiteral
-    /// Int32 literal
+    /// int32 literal
     | IntegerLiteral
     /// float literal
     | RealNumberLiteral
+    // bool literal
+    | BooleanLiteral
     
     // Keywords
     /// 'if' keyword
@@ -162,6 +164,8 @@ type TokenType =
     | KeywordString
     /// 'char' keyword
     | KeywordChar
+    /// 'bool' keyword
+    | KeywordBool
     /// 'return' keyword
     | ReturnKeyword
     /// 'using' keyword

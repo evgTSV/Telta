@@ -2,26 +2,33 @@
 
 open System
 open System.Globalization
+open FParsec
 
 module TokenRegexes =
-    let private checkIdentifier(id:string) =
-        id
-        |> Seq.where (fun ch -> not (Char.IsLetterOrDigit(ch)) && not (ch = '_'))
-        |> Seq.isEmpty
-    let private isIdentifier (lexeme:string) =
-        (Char.IsLetter(lexeme[0]) || lexeme[0] = '_') && lexeme.Length < 100 && checkIdentifier(lexeme)
+    let private identifier (lexeme:string) =
+        if lexeme.Length > 100 then false
+        else
+        let idParser : Parser<string, unit> = many1Chars2 (asciiLetter <|> pchar '_') (asciiLetter <|> digit <|> pchar '_')
+        match run idParser lexeme with
+            | Success(_, _, position)
+                when position.Index = lexeme.Length -> true
+            | _ -> false
         
-    let private isStringLiteral(literal:string) =
+    let private stringLiteral(literal:string) =
         literal.StartsWith("\"") && literal.EndsWith("\"")
         
-    let private isCharLiteral(literal:string) =
+    let private charLiteral(literal:string) =
         literal.StartsWith("'") && literal.EndsWith("'") && literal.Length = 3
     
-    let private isIntNumber(literal:string) =
+    let private intNumber(literal:string) =
         let isInt, _ = Int32.TryParse(literal)
         isInt
         
-    let private isRealNumber(literal:string) =
+    let private realNumber(literal:string) =
+        let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
+        isReal
+        
+    let private booleanLiteral(literal:string) =
         let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
         isReal
 
@@ -89,7 +96,13 @@ module TokenRegexes =
             | "$" -> DollarSign
             | "//" -> DoubleSlash
             
-            | l when isIdentifier l ->
+            | l when stringLiteral l -> StringLiteral
+            | l when charLiteral l -> CharLiteral
+            | l when intNumber l -> IntegerLiteral
+            | l when realNumber l -> RealNumberLiteral
+            | l when booleanLiteral l -> BooleanLiteral
+            
+            | l when identifier l ->
                 match l with
                     | "if" -> KeywordIf
                     | "elif" -> KeywordElif
@@ -101,6 +114,7 @@ module TokenRegexes =
                     | "char" -> KeywordChar
                     | "int32" -> KeywordInt
                     | "double" -> KeywordDouble
+                    | "bool" -> KeywordBool
                     | "return" -> ReturnKeyword
                     | "use" -> UsingKeyword
                     | "namespace" -> NamespaceKeyword
@@ -108,10 +122,5 @@ module TokenRegexes =
                     | "public" -> PublicKeyword
                     | "private" -> PrivateKeyword
                     | _ -> Identifier
-            
-            | l when isStringLiteral l -> StringLiteral
-            | l when isCharLiteral l -> CharLiteral
-            | l when isIntNumber l -> IntegerLiteral
-            | l when isRealNumber l -> RealNumberLiteral
             
             | _ -> Unknown
