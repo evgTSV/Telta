@@ -5,8 +5,12 @@ open System.Globalization
 open FParsec
 
 module TokenRegexes =
+    
+    [<Literal>]
+    let IdentifierLengthLimit = 100
+    
     let private identifier (lexeme:string) =
-        if lexeme.Length > 100 then false
+        if lexeme.Length > IdentifierLengthLimit then false
         else
         let idParser : Parser<string, unit> = many1Chars2 (asciiLetter <|> pchar '_') (asciiLetter <|> digit <|> pchar '_')
         match run idParser lexeme with
@@ -28,9 +32,7 @@ module TokenRegexes =
         let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
         isReal
         
-    let private booleanLiteral(literal:string) =
-        let isReal, _ = Double.TryParse(literal, CultureInfo.InvariantCulture)
-        isReal
+    let private booleanLiteral(literal:string) = literal = "true" || literal = "false"
 
     let findMatchToken(lexeme:string) =
         match lexeme with

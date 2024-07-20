@@ -2,4 +2,9 @@
 
 open Telta.Syntax
 
-type Token = { TokenType:TokenType; Location:Location; Text:string }
+type Token =
+    {
+        TokenType:TokenType
+        Location:Location
+        Text:string
+    }

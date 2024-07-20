@@ -56,6 +56,16 @@ public class TokenRegexesTest
         
         Assert.Equal(TokenType.RealNumberLiteral, tokenType);
     }
+    
+    [Theory]
+    [InlineData("true")]
+    [InlineData("false")]
+    public void BooleanLiteralDetectionTest(string lexeme)
+    {
+        var tokenType = TokenRegexes.findMatchToken(lexeme);
+        
+        Assert.Equal(TokenType.BooleanLiteral, tokenType);
+    }
 
     [Theory]
     [InlineData("")]
@@ -79,7 +89,7 @@ public class TokenRegexesTest
     [InlineData("int_var%able3")]
     public void InvalidCustomIdentifierTest(string lexeme)
     {
-        if (lexeme == "length_over_limit") lexeme = new string('a', 101);
+        if (lexeme == "length_over_limit") lexeme = new string('a', TokenRegexes.IdentifierLengthLimit + 1);
         
         var tokenType = TokenRegexes.findMatchToken(lexeme);
         
