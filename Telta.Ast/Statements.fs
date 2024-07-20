@@ -10,4 +10,4 @@ module Statements =
         | GotoStatement of identifier:Token
         | ReturnStatement of value:Expression
         | UsingStatement of identifier:Token
-        | CompoundStatement of statements:Statement
+        | CompoundStatement of statements:Statement list
