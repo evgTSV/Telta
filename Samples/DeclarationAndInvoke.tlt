@@ -1,0 +1,26 @@
+﻿// Main namespace
+[Telta.Example]
+
+use Telta.Core;
+
+namespace FileImpl // SubNamespace (Telta.Example.FileImpl)
+{
+    public class File
+    {
+        private literal string ErrorMessage = "Wrong path"; // inline field as literal
+        private string path;
+    
+        // Ctor
+        public *(string path)
+        {
+            x!path = path; // x! - access to this members, x - any identifier
+        }
+        
+        // Private instance method
+        private void InnerEvaluations(string? option, int* byref, int~ out_ref)
+        {
+            out_ref = 0;
+            x!path = Path.Combine(x!path, (option ?? "none")); // If Option is Some -> return value, else -> return "none"
+        }
+    }
+}

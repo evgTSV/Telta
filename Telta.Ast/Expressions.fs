@@ -11,7 +11,7 @@ module Expressions =
         | MemberAccessExpression of target:Expression * identifier:Expression
         | ObjectCreationExpression of identifier:Token * arguments:List<Expression>
         | SimpleAssignExpression of ``member``:Expression * value:Expression
+        | EqualsValueClause of equals:Token * value:Expression
         | StringLiteralExpression of value:Token
         | NumericLiteralExpression of value:Token
         | BinaryExpression of operator:Token * left:Expression * right:Expression
-        | Empty

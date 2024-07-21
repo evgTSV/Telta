@@ -97,6 +97,8 @@ module TokenRegexes =
             | "\"" -> DoubleQuotationMark
             | "$" -> DollarSign
             | "//" -> DoubleSlash
+            | "?" -> QuestionMark
+            | "??" -> DoubleQuestionMark
             
             | l when stringLiteral l -> StringLiteral
             | l when charLiteral l -> CharLiteral
@@ -117,12 +119,14 @@ module TokenRegexes =
                     | "int32" -> KeywordInt
                     | "double" -> KeywordDouble
                     | "bool" -> KeywordBool
+                    | "void" -> KeywordVoid
                     | "return" -> ReturnKeyword
                     | "use" -> UsingKeyword
                     | "namespace" -> NamespaceKeyword
                     | "class" -> ClassKeyword
                     | "public" -> PublicKeyword
                     | "private" -> PrivateKeyword
+                    | "literal" -> LiteralKeyword
                     | _ -> Identifier
             
             | _ -> Unknown

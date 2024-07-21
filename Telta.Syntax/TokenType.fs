@@ -130,6 +130,11 @@ type TokenType =
     | DollarSign
     /// '//'
     | DoubleSlash
+    /// '?'
+    | QuestionMark
+    /// '??'
+    | DoubleQuestionMark
+    
     
     // Literals
     /// string literal
@@ -166,9 +171,11 @@ type TokenType =
     | KeywordChar
     /// 'bool' keyword
     | KeywordBool
+    /// 'void' keyword
+    | KeywordVoid
     /// 'return' keyword
     | ReturnKeyword
-    /// 'using' keyword
+    /// 'use' keyword
     | UsingKeyword
     /// 'namespace' keyword
     | NamespaceKeyword
@@ -178,3 +185,5 @@ type TokenType =
     | PublicKeyword
     /// 'private' keyword
     | PrivateKeyword
+    /// 'literal' keyword
+    | LiteralKeyword
