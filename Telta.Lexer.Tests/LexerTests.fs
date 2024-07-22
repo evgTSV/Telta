@@ -38,6 +38,17 @@ let AssignNewVariablesTest (tokens:TokenStream) (definedType:TokenType) (value:T
 let IntegerLiteralAssignNewVariablesTest (source:string) =
     testTokenization source (fun tokens ->
         AssignNewVariablesTest tokens TokenType.KeywordInt TokenType.IntegerLiteral)
+
+[<InlineData("int32 num =-10;")>]
+[<InlineData("int32 num = -10;")>]
+[<InlineData("int32 num = - 10;")>]
+let NegativeIntLiteralTest (source:string) =
+    testTokenization source (fun tokens ->
+        Assert.Equal(7, tokens.Length)
+        let expectedTokens = [|
+            TokenType.KeywordInt; TokenType.Identifier; TokenType.Assign; TokenType.Subtract; TokenType.IntegerLiteral; TokenType.Semicolon; TokenType.End
+        |]
+        Assert.Equivalent(expectedTokens, (tokens :> IEnumerable<Token>) |> Seq.map (_.TokenType)))
     
 [<Theory>]
 [<InlineData("double num = 10.;")>]
