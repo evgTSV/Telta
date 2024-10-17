@@ -25,8 +25,6 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Telta.Ast", "Telta.Ast\Telt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.Parser", "Telta.Parser\Telta.Parser.csproj", "{B89CE10C-36D4-4173-BBC4-9D028F65798B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModulesRunner", "ModulesRunner\ModulesRunner.csproj", "{DC353908-657D-4B44-9C08-42017148FCF1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telta.IntegrationTests", "Telta.IntegrationTests\Telta.IntegrationTests.csproj", "{8DCA57BD-DF75-4655-A9FD-A873883D8886}"
 EndProject
 Global
