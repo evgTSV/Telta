@@ -127,6 +127,8 @@ module TokenRegexes =
                     | "public" -> PublicKeyword
                     | "private" -> PrivateKeyword
                     | "literal" -> LiteralKeyword
+                    | "try" -> TryKeyword
+                    | "with" -> WithKeyword
                     | _ -> Identifier
             
             | _ -> Unknown

@@ -187,3 +187,7 @@ type TokenType =
     | PrivateKeyword
     /// 'literal' keyword
     | LiteralKeyword
+    /// 'try' keyword
+    | TryKeyword
+    /// 'with' keyword
+    | WithKeyword
